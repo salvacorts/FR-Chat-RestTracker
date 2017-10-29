@@ -32,10 +32,12 @@ class DataBase:
     def AddUser(self, name, ip, pubKey):
         sql = SqlCalls.AddUserSql(name, ip, pubKey)
         self.dbCursor.execute(sql)
+        self.db.commit()
 
     def UpdateUser(self, name, ip, pubKey):
         sql = SqlCalls.UpdateUserSql(name, ip, pubKey)
         self.dbCursor.execute(sql)
+        self.db.commit()
 
     def GetUser(self, name):
         sql = SqlCalls.GetUserInfoSql(name)
