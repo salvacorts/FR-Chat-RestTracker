@@ -29,5 +29,13 @@ def GetUserInfo(name, response=None):
     return user
 
 
-# AddUser("Salva", "127.0.0.1", "lmaooo")
-# GetUserInfo("Salva")
+@hug.get("/", output=hug.output_format.html)
+def Home():
+    return """
+        <html>
+            <body>
+                <h1>Hi there!</h1>
+                <p>Dont break anything ;)</p>
+            </body>
+        </html>
+    """
