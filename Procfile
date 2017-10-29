@@ -1,1 +1,1 @@
-web: sudo hug -f main.py -p 80
+web: sudo hug -f main.py -p 8000
