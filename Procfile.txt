@@ -1,1 +1,1 @@
-web: hug -f main.py
+web: hug -f main.py -p 80
