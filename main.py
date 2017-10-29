@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
 
-from modules.database import UsersDB
+from modules.database import DataBase
 from modules.users import User
 import hug, falcon
 
-db = UsersDB()
-
-@hug.post("/post/")
-def testPost(uno, otro):
-    return uno + "\t" + otro
+db = DataBase("database/users.db")
 
 @hug.post("/users/add/")
+@hug.get("/users/add/{name}&{ip}&{pubKey}")
 def AddUser(name, ip, pubKey, response=None):
     if db.KeyExists(name):
         response.status = falcon.HTTP_418
         return "User {0} already exists".format(name)
 
-    db.AddUser(User(name, ip, pubKey))
+    db.AddUser(name, ip, pubKey)
 
     response.status = falcon.HTTP_201
     return "User Added"
@@ -29,8 +26,8 @@ def GetUserInfo(name, response=None):
 
     user = db.GetUser(name)
 
-    return {
-        "name": user.name,
-        "ip": user.ip,
-        "pubKey": user.pubKey
-    }
+    return user
+
+
+# AddUser("Salva", "127.0.0.1", "lmaooo")
+# GetUserInfo("Salva")
