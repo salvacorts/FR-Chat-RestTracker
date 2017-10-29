@@ -1,1 +1,1 @@
-web: hug -f main.py -p 80
+sudo web: hug -f main.py -p 80
