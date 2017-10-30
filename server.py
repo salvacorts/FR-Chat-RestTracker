@@ -50,11 +50,4 @@ def GetUserInfo():
 
 @hug.get("/", output=hug.output_format.html)
 def Home():
-    return """
-        <html>
-            <body>
-                <h1>Hi there!</h1>
-                <p>Dont break anything ;)</p>
-            </body>
-        </html>
-    """
+    return HOME_HTML
