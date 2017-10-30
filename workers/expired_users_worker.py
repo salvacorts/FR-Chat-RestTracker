@@ -13,4 +13,4 @@ while True:
     db.commit()
     dbCursor.close()
 
-    time.sleep(24*60*60 sec) # Rest for a day
+    time.sleep(24*60*60) # Rest for a day
