@@ -1,3 +1,4 @@
+import modules.keyring
 import sqlite3 as sql
 
 class DataBase:
@@ -15,9 +16,15 @@ class DataBase:
         self.dbCursor.execute(DataBase.addUser, (name, ip, pubKey,))
         self.db.commit()
 
-    def UpdateUser(self, name, ip, pubKey):
+    def UpdateUser(self, name, ip, pubKey, validationMSG):
+        currentPubKey = self.GetUser(name)["pubKey"]
+
+        if not ValidCredentials(currentPubKey, validationMSG):
+            return false
+
         self.dbCursor.execute(DataBase.updateUser, (name, ip, pubKey,))
         self.db.commit()
+        return true
 
     def GetUser(self, name):
         self.dbCursor.execute(DataBase.userInfo, (name,))
