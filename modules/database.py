@@ -2,9 +2,9 @@ import sqlite3 as sql
 
 class DataBase:
     addUser = """ INSERT INTO users (name, ip, pubKey) VALUES (?, ?, ?); """
-    updateUser = """ UPDATE users SET ip=?, pubKey=? WHERE name=? """
-    userInfo = """SELECT * FROM users WHERE name=? LIMIT 1"""
-    keyExists = """SELECT count(*) FROM users WHERE name=? """
+    updateUser = """ UPDATE users SET ip=?, pubKey=?, creacion=DATETIME("now") WHERE name=? """
+    userInfo = """SELECT name, ip, pubkey FROM users WHERE name=? LIMIT 1"""
+    keyExists = """SELECT count(*) FROM users WHERE name=? LIMIT 1"""
 
     def __init__(self, dbFile):
         self.file = dbFile

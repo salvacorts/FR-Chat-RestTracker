@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from modules.database import DataBase
-from modules.users import User
 import hug, falcon
 
 db = DataBase("database/users.db")

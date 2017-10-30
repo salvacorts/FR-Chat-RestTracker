@@ -1,1 +1,2 @@
-web: hug -f main.py -p $PORT
+web: hug -f server.py -p $PORT
+worker: python workers/expired_users_worker.py
