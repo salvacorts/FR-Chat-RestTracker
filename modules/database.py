@@ -1,9 +1,9 @@
-import modules.keyring
+from modules.keyring import *
 import sqlite3 as sql
 
 class DataBase:
     addUser = """ INSERT INTO users (name, ip, pubKey) VALUES (?, ?, ?); """
-    updateUser = """ UPDATE users SET ip=?, pubKey=?, creacion=DATETIME("now") WHERE name=? """
+    updateUser = """ UPDATE users SET ip=?, creacion=DATETIME("now") WHERE name=? """
     userInfo = """SELECT name, ip, pubkey FROM users WHERE name=? LIMIT 1"""
     keyExists = """SELECT count(*) FROM users WHERE name=? LIMIT 1"""
 
@@ -16,15 +16,19 @@ class DataBase:
         self.dbCursor.execute(DataBase.addUser, (name, ip, pubKey,))
         self.db.commit()
 
-    def UpdateUser(self, name, ip, pubKey, validationMSG):
+    def UpdateUser(self, name, ip, validationMSG):
         currentPubKey = self.GetUser(name)["pubKey"]
 
-        if not ValidCredentials(currentPubKey, validationMSG):
-            return false
+        # print(currentPubKey)
+        # print()
+        # print(validationMSG)
 
-        self.dbCursor.execute(DataBase.updateUser, (name, ip, pubKey,))
+        if not ValidCredentials(currentPubKey, validationMSG):
+            return False
+
+        self.dbCursor.execute(DataBase.updateUser, (ip, name,))
         self.db.commit()
-        return true
+        return True
 
     def GetUser(self, name):
         self.dbCursor.execute(DataBase.userInfo, (name,))

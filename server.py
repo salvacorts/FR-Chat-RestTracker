@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from falcon import HTTP_404, HTTP_201, HTTP_409, HTTP_403
+from falcon import HTTP_404, HTTP_201, HTTP_409, HTTP_403, HTTP_202
 from modules.database import DataBase
-import modules.constants
+from modules.constants import *
 import hug, falcon
 
 db = DataBase("database/users.db")
@@ -16,21 +16,21 @@ def AddUser(name, ip, pubKey, response=None):
 
     db.AddUser(name, ip, pubKey)
 
-    response.status = falcon.HTTP_201
+    response.status = HTTP_201
     return "User Added"
 
 @hug.post("/users/update/")
-@hug.get("/users/update/{name}&{ip}&{pubKey}&{validationMSG}")
-def UpdateUser(name, ip, pubKey, validationMSG, response=None):
+@hug.get("/users/update/{name}&{ip}&{validationMSG}")
+def UpdateUser(name, ip, validationMSG, response=None):
     if not db.KeyExists(name):
         response.status = HTTP_404
         return "User {0} doesn't exists".format(name)
 
-    if not db.UpdateUser(name, ip, pubKey, validationMSG):
+    if not db.UpdateUser(name, ip, validationMSG):
         response.status = HTTP_403
         return "Invalid credentials"
 
-    response.status = falcon.HTTP_201
+    response.status = HTTP_202
     return "User info updated"
 
 @hug.get("/users/get/{name}")
@@ -44,8 +44,8 @@ def GetUserInfo(name, response=None):
     return user
 
 @hug.get("/key/")
-def GetUserInfo(name, response=None):
-    return constants.KEY
+def GetUserInfo():
+    return KEY
 
 
 @hug.get("/", output=hug.output_format.html)
