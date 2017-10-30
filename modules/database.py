@@ -19,10 +19,6 @@ class DataBase:
     def UpdateUser(self, name, ip, validationMSG):
         currentPubKey = self.GetUser(name)["pubKey"]
 
-        # print(currentPubKey)
-        # print()
-        # print(validationMSG)
-
         if not ValidCredentials(currentPubKey, validationMSG):
             return False
 

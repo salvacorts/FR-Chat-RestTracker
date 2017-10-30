@@ -6,8 +6,6 @@ import base64
 
 def ValidCredentials(currentPubKey, signature):
     signature = base64.b64decode(signature);
-    # print (currentPubKey)
-    # print(signature)
 
     rsaKey = RSA.importKey(currentPubKey)
     h = SHA.new()
