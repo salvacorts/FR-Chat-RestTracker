@@ -3,7 +3,7 @@ import sqlite3, time
 # DOC: https://sqlite.org/lang_datefunc.html
 
 dataFile = "database/users.db"
-sql = """DELETE FROM users WHERE creacion<DATETIME("now", "-1 minute")"""
+sql = """DELETE FROM users WHERE creacion<DATETIME("now", "-1 day")"""
 
 while True:
     db = sqlite3.connect(dataFile)
@@ -13,4 +13,5 @@ while True:
     db.commit()
     dbCursor.close()
 
-    time.sleep(24*60*60) # Rest for a day
+    print("[-] Usuarios incativos borrados")
+    time.sleep(6*60*60) # Rest for 6 hours
