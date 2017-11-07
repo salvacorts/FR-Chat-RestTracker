@@ -1,4 +1,5 @@
-import sqlite3, time
+import sqlite3
+import time
 
 # DOC: https://sqlite.org/lang_datefunc.html
 
@@ -9,9 +10,9 @@ while True:
     db = sqlite3.connect(dataFile)
     dbCursor = db.cursor()
 
-    dbCursor.execute(sql);
+    dbCursor.execute(sql)
     db.commit()
     dbCursor.close()
 
     print("[-] Usuarios incativos borrados")
-    time.sleep(6*60*60) # Rest for 6 hours
+    time.sleep(6 * 60 * 60)  # Rest for 6 hours

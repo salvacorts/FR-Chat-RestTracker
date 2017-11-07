@@ -1,10 +1,11 @@
 from modules.keyring import *
 import sqlite3 as sql
 
+
 class DataBase:
-    addUser = """ INSERT INTO users (name, ip, pubKey) VALUES (?, ?, ?); """
-    updateUser = """ UPDATE users SET ip=?, creacion=DATETIME("now") WHERE name=? """
-    userInfo = """SELECT name, ip, pubkey FROM users WHERE name=? LIMIT 1"""
+    addUser = """ INSERT INTO users (name, ip, port, pubKey) VALUES (?, ?, ?, ?); """
+    updateUser = """ UPDATE users SET ip=?, port=?, creacion=DATETIME("now") WHERE name=? """
+    userInfo = """SELECT name, ip, port, pubkey FROM users WHERE name=? LIMIT 1"""
     keyExists = """SELECT count(*) FROM users WHERE name=? LIMIT 1"""
 
     def __init__(self, dbFile):
@@ -12,17 +13,17 @@ class DataBase:
         self.db = sql.connect(self.file)
         self.dbCursor = self.db.cursor()
 
-    def AddUser(self, name, ip, pubKey):
-        self.dbCursor.execute(DataBase.addUser, (name, ip, pubKey,))
+    def AddUser(self, name, ip, port, pubKey):
+        self.dbCursor.execute(DataBase.addUser, (name, ip, port, pubKey,))
         self.db.commit()
 
-    def UpdateUser(self, name, ip, validationMSG):
+    def UpdateUser(self, name, ip, port, validationMSG):
         currentPubKey = self.GetUser(name)["pubKey"]
 
         if not ValidCredentials(currentPubKey, validationMSG):
             return False
 
-        self.dbCursor.execute(DataBase.updateUser, (ip, name,))
+        self.dbCursor.execute(DataBase.updateUser, (ip, port, name,))
         self.db.commit()
         return True
 
@@ -34,7 +35,8 @@ class DataBase:
         return {
             "name": out[0],
             "ip": out[1],
-            "pubKey": out[2]
+            "port": out[2],
+            "pubKey": out[3]
         }
 
     def KeyExists(self, name):
