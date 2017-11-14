@@ -1,1 +1,1 @@
-FR-Chat-Client/README.md
+Please, reffer to https://github.com/salvacorts/FR-Chat-Client/blob/master/README.md
